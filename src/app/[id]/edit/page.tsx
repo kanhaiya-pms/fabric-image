@@ -1,17 +1,18 @@
 import EditImage from '@/components/EditImage';
 import React from 'react';
 
-interface Params {
-  id: string;
+type Props = {
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-// The `params` prop comes directly from Next.js for dynamic routes
-const Page = async ({ params }: { params: Params }) => {
+// The params prop comes directly from Next.js for dynamic routes
+const Page = async ({ params }: Props) => {
   try {
-    console.log("id =>", params.id);
+    const id = (await params).id
 
     const response = await fetch(
-      `https://api.unsplash.com/photos/${params.id}?client_id=P49MYBIkd9hKmWtkvaUI9TFls4IZ4c_vnJo1C0uS0B0`
+      `https://api.unsplash.com/photos/${id}?client_id=P49MYBIkd9hKmWtkvaUI9TFls4IZ4c_vnJo1C0uS0B0`
     );
 
     if (!response.ok) {
